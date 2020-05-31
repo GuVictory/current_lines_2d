@@ -56,6 +56,15 @@ impl CurrentLineGenerator {
     fn draw_loop(&mut self) {
         let mut lines_counter = 0.0;
         while lines_counter < 1000.0 * self.size.0 {
+
+            if !self.current_cell.contains_node(&self.current_node) {
+                self.find_current_cell();
+            }
+
+            if !self.current_cell.contains_node(&self.current_node) {
+                break;
+            }
+
             interpolation(&self.current_cell, &mut self.current_node);
             self.nodes.push(self.current_node.clone());
 
@@ -66,18 +75,17 @@ impl CurrentLineGenerator {
                     + self.dy * self.current_node.vector_field.coords_normalize.y,
             ));
 
-            // TODO: Добавить отрисовку паследней точки
+
+/*            // TODO: Добавить отрисовку паследней точки
             if self.current_node.coords.x < self.min_x
                 || self.current_node.coords.y < self.min_y
                 || self.current_node.coords.x > self.min_x + self.size.0
                 || self.current_node.coords.y > self.min_y + self.size.1
             {
                 break;
-            }
+            }*/
 
-            if !self.current_cell.contains_node(&self.current_node) {
-                self.find_current_cell();
-            }
+
 
             lines_counter += 1.0;
         }

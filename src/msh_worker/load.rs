@@ -23,6 +23,8 @@ pub fn load_mesh(file_name: &String) -> Result<(Vec<Cell>, f64, f64, f64, f64), 
     let mut nodes: Vec<Node> = vec![];
     let mut cells: Vec<Cell> = vec![];
 
+    let mut fake_cells: Vec<(usize, usize, usize, usize)> = vec![];
+
     for (ind, line) in reader.lines().enumerate() {
         let line = line?;
 
@@ -102,12 +104,7 @@ pub fn load_mesh(file_name: &String) -> Result<(Vec<Cell>, f64, f64, f64, f64), 
                     Ok(val) => val,
                     Err(err) => panic!(err),
                 };
-                cells.push(Cell::new(
-                    &nodes[n1 - 1].clone(),
-                    &nodes[n2 - 1].clone(),
-                    &nodes[n3 - 1].clone(),
-                    &nodes[n4 - 1].clone(),
-                ));
+                fake_cells.push((n1 - 1, n2 - 1, n3 - 1, n4 -1));
             }
             if file_place == CurrentFilePlace::NodeData {
                 let data: Vec<&str> = line.split(' ').collect();
@@ -163,6 +160,15 @@ pub fn load_mesh(file_name: &String) -> Result<(Vec<Cell>, f64, f64, f64, f64), 
         min_x + max_x,
         min_y + max_y
     );
+
+    for val in &fake_cells {
+        cells.push(Cell::new(
+            &nodes[val.0].clone(),
+            &nodes[val.1].clone(),
+            &nodes[val.2].clone(),
+            &nodes[val.3].clone(),
+        ));
+    }
     Ok((cells, min_x + max_x, min_y + max_y, min_x, min_y))
 }
 

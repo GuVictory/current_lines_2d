@@ -49,14 +49,17 @@ impl GeoRenderer {
         for i in start_node_point..(start_node_point + self.node_counter) {
             nodes_number.push(i.to_string());
         }
-        file.write_all(
-            format!(
-                "Line({}) = {{{}}};\n",
-                self.main_counter,
-                nodes_number.join(", ")
-            )
-            .as_bytes(),
-        );
+        if nodes.len() != 0 {
+            file.write_all(
+                format!(
+                    "Line({}) = {{{}}};\n",
+                    self.main_counter,
+                    nodes_number.join(", ")
+                )
+                    .as_bytes(),
+            );
+        }
+
         self.main_counter += 1;
         self.node_counter = 0;
         Ok(())

@@ -1,5 +1,5 @@
 [package]
-name = "current_lines"
+name = "current_lines_2d"
 version = "0.1.0"
 authors = ["GuVictory"]
 edition = "2018"
