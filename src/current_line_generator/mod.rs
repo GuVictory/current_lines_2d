@@ -75,18 +75,6 @@ impl CurrentLineGenerator {
                     + self.dy * self.current_node.vector_field.coords_normalize.y,
             ));
 
-
-/*            // TODO: Добавить отрисовку паследней точки
-            if self.current_node.coords.x < self.min_x
-                || self.current_node.coords.y < self.min_y
-                || self.current_node.coords.x > self.min_x + self.size.0
-                || self.current_node.coords.y > self.min_y + self.size.1
-            {
-                break;
-            }*/
-
-
-
             lines_counter += 1.0;
         }
     }
